@@ -1,0 +1,17 @@
+---
+- hosts: all
+  gather_facts: no
+  vars:
+    forwardport: 8765
+    protocol: udp
+    toport: 8764
+    toaddr: 127.0.0.1
+
+  tasks:
+  - name: Redirect port {{ forwardport }}/{{ protocol }} to {{ toport }} on {{ toaddr }}
+    firewalld:
+      rich_rule: rule family=ipv4 forward-port port={{ forwardport }} protocol={{ protocol }} to-port={{ toport }} to-addr={{ toaddr }}
+      zone:      public
+      permanent: yes
+      immediate: yes
+      state:     enabled

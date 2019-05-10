@@ -1,0 +1,16 @@
+---
+- hosts: all
+  gather_facts: no
+  vars:
+    fport: 8765
+    protocol: udp
+    state: enabled
+
+  tasks:
+  - name: Firewall rule on {{ fport }}/{{ protocol }} state {{ state }}
+    firewalld:
+      zone: public
+      port: "{{ fport }}/{{ protocol }}"
+      permanent: yes
+      immediate: yes
+      state: "{{ state }}"
