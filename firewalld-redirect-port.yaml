@@ -6,12 +6,17 @@
     protocol: udp
     toport: 8764
     toaddr: 127.0.0.1
+    state: enabled
 
   tasks:
-  - name: Redirect port {{ forwardport }}/{{ protocol }} to {{ toport }} on {{ toaddr }}
+  - name: Redirect port {{ forwardport }}/{{ protocol }} to {{ toport }} on {{ toaddr }} state {{ state }}
     firewalld:
       rich_rule: rule family=ipv4 forward-port port={{ forwardport }} protocol={{ protocol }} to-port={{ toport }} to-addr={{ toaddr }}
       zone:      public
       permanent: yes
-      immediate: yes
-      state:     enabled
+      state:     "{{ state }}"
+    notify: firewalld reload
+
+  handlers:
+  - name: firewalld reload
+    command: firewall-cmd --reload
