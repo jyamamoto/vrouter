@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 #verificacion de argumentos
-if [ $# -eq 2 ] && [ -e $1 ] && [ -e $2 ] && [ -e $3 ]; then
+if [ $# -eq 3 ]; then
 	vm_name=$1
 	image_name=$2
 	customize_file=$3
