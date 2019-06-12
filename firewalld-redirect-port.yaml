@@ -2,6 +2,8 @@
 - hosts: all
   gather_facts: no
   vars:
+    saddress: 0.0.0.0/0
+    daddress: 127.0.0.1
     forwardport: 8765
     protocol: udp
     toport: 8764
@@ -9,9 +11,9 @@
     state: enabled
 
   tasks:
-  - name: Redirect port {{ forwardport }}/{{ protocol }} to {{ toport }} on {{ toaddr }} state {{ state }}
+  - name: Redirect from {{ saddress }} to {{ daddress }} port {{ forwardport }}/{{ protocol }} to {{ toport }} on {{ toaddr }} state {{ state }}
     firewalld:
-      rich_rule: rule family=ipv4 forward-port port={{ forwardport }} protocol={{ protocol }} to-port={{ toport }} to-addr={{ toaddr }}
+      rich_rule: rule family=ipv4 source address={{ saddress }} destination address={{ daddress}} forward-port port={{ forwardport }} protocol={{ protocol }} to-port={{ toport }} to-addr={{ toaddr }}
       zone:      public
       permanent: yes
       state:     "{{ state }}"

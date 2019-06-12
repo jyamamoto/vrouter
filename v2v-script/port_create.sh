@@ -1,6 +1,6 @@
 
 net=muni-net-priv
-subnet="192.168.150.0/24"
+subnet=muni-subnet-priv
 ip_address=$2
 vm_name=$1
 
