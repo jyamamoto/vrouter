@@ -8,7 +8,8 @@ if [ $# -eq 3 ]; then
 
 	#adaptacion de vm
 	echo "PASO 1 - Adantando VM para OSP"
-	virt-customize --run $customize_file --root-password password:redhat01 -a $image_name
+	##virt-customize --run $customize_file --root-password password:redhat01 -a $image_name
+	virt-customize --run $customize_file -a $image_name
 
 	#obteniendo el tamaño de la imagen
 	echo "PASO 2 - Obteniendo el tamaño de la imagen"
@@ -28,7 +29,7 @@ if [ $# -eq 3 ]; then
 
 	#declarando el volumen como booteable
 	echo "PASO 6 - Declarando el volumen como booteable"
-	cinder set-bootable $volume_id
+	cinder set-bootable $volume_id true
 
 	#exponiendo el id de volumen por pantalla
 	echo "El siguiente VOLUMEN_ID $volume_id fue generado para la VM $vm_name" 
